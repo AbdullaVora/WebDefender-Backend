@@ -18,3 +18,4 @@ build/
 *.secret
 config.json
 secrets.json
+.vercel

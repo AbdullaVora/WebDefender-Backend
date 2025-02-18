@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 from config.database import db
 from routers.userRoute import router as user_router
 import uvicorn
+import os
 
 app = FastAPI()
 

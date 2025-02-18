@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from routers.userRoute import router as user_router
-from mangum import Mangum
+import os
+import uvicorn
 
 app = FastAPI(
     title="Your API",
@@ -23,4 +24,6 @@ async def home():
     return "Server is running successfully"
 
 # Handler for Vercel
-handler = Mangum(app, lifespan="off")
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))  # Default to 8080 if PORT is not set
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

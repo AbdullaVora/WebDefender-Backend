@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from routers.userRoute import router as user_router
-from mangum import Mangum  # ASGI Adapter for Vercel
+from mangum import Mangum
 
-app = FastAPI()
+app = FastAPI(
+    title="Your API",
+    root_path="/"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,7 +20,7 @@ app.include_router(user_router, prefix="/api/auth")
 
 @app.get("/")
 async def home():
-    return {"message": "Server is running successfully"}
+    return "Server is running successfully"
 
-# ASGI Adapter for Vercel
-handler = Mangum(app)
+# Handler for Vercel
+handler = Mangum(app, lifespan="off")

@@ -1,0 +1,22 @@
+{
+    "info": {
+        "args": "C:\\Users\\Abdullah\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\dirsearch -u http://testphp.vulnweb.com -w D:\\WebDefender_Backend\\WebDefender_API\\helper\\payloads\\dirbrute.txt -e php,html,txt,js,css -t 15 --random-agent --delay 0.3 --timeout 30 --retries 3 -r --deep-recursive --user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/119.0.0.0 -H Referer: http://testphp.vulnweb.com -H X-Forwarded-For: 127.0.0.1 -H Origin: https://bing.com -H Cookie: {} --exclude-status=403,404 --exclude-size=0 -o dirsearch_report.json --format=json",
+        "time": "Sun Mar 30 14:46:41 2025"
+    },
+    "results": [
+        {
+            "content-length": 262,
+            "content-type": "text/html",
+            "redirect": "",
+            "status": 200,
+            "url": "http://testphp.vulnweb.com/admin/"
+        },
+        {
+            "content-length": 5523,
+            "content-type": "text/html",
+            "redirect": "",
+            "status": 200,
+            "url": "http://testphp.vulnweb.com/login.php"
+        }
+    ]
+}

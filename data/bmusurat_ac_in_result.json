@@ -1,0 +1,18 @@
+{
+    "scanType": "WAFDetector",
+    "Target_URL": "bmusurat.ac.in",
+    "IP_Information": {
+        "IPAddress": "104.21.84.27",
+        "Location": "San Francisco, California",
+        "Latitude": 37.7792588,
+        "Longitude": -122.4193286,
+        "ISP": "AS13335 Cloudflare, Inc."
+    },
+    "Status_Code": 403,
+    "WAF_Detection_Result": [
+        "Cloudflare"
+    ],
+    "Server": "Unknown Server",
+    "Protection_Methods": "Rate Limiting, Captcha",
+    "logs": []
+}

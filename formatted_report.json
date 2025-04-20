@@ -1,0 +1,31 @@
+{
+    "scan_info": {
+        "target": "/uploads/64.php",
+        "extensions": [
+            "php",
+            "html",
+            "txt",
+            "js",
+            "css"
+        ],
+        "threads": 15,
+        "delay": 0.3,
+        "timeout": 30
+    },
+    "results": [
+        {
+            "status": 200,
+            "url": "http://testphp.vulnweb.com/admin/",
+            "redirect_to": null,
+            "content_type": "text/html",
+            "content_length": 262
+        },
+        {
+            "status": 200,
+            "url": "http://testphp.vulnweb.com/login.php",
+            "redirect_to": null,
+            "content_type": "text/html",
+            "content_length": 5523
+        }
+    ]
+}

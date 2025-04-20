@@ -62,7 +62,7 @@ class UserController:
                 "message": "User Registered Successfully",
                 "token": token,  # Include JWT token in response
                 "data": response_data,
-                "status_code": 201
+                "status_code": 201,
             }
 
         except PyMongoError as e:
@@ -122,6 +122,7 @@ class UserController:
             # step 6 return response
             return {
                 "message": "Login Success",
+                "user_id": str(user["_id"]),
                 "token": token,
                 "data": response_data,
                 "status_code": 200

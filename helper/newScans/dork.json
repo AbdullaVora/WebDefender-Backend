@@ -1,0 +1,144 @@
+{
+  "google_dorks": [
+    {
+      "category": "Directory Listening Vulnerabilities ",
+      "dorks": [
+        "site:{} intitle:index.of"
+      ]
+    },
+    {
+      "category": "Exposed Configuration Files",
+      "dorks": [
+        "site:{} ext:xml | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini"
+      ]
+    },
+    {
+      "category": "Exposed Database Files",
+      "dorks": [
+        "site:{} ext:sql | ext:dbf | ext:mdb"
+      ]
+    },
+    {
+      "category": "Find Wordpress",
+      "dorks": [
+        "site:{} inurl:wp- | inurl:wp-content | inurl:plugins | inurl:uploads | inurl:themes | inurl:download"
+      ]
+    },
+    {
+      "category": "APIKeysSecrets",
+      "dorks": [
+        "site:{} intext:\"Authorization: Bearer\"",
+        "site:{} intext:\"SECRET_KEY\"",
+        "site:{} intext:\"access_token\""
+      ]
+    },
+    {
+      "category": "ExposedPanelsAdminPages",
+      "dorks": [
+        "site:{} intitle:\"Admin Login\"",
+        "site:{} inurl:admin | inurl:cpanel | inurl:dashboard | inurl:backend"
+      ]
+    },
+    {
+      "category": "Exposed Login Pages",
+      "dorks": [
+        "site:{} intitle:\"index of /backup\"",
+        "site:{} intitle:\"index of /database\"",
+        "site:{} intitle:\"index of /config\""
+      ]
+    },
+    {
+      "category": "Exposed Log Files ",
+      "dorks": [
+        "site:{} ext:log"
+      ]
+    },
+    {
+      "category": "SQL errors",
+      "dorks": [
+        "site:{} intext:\"sql syntax near\" | intext:\"syntax error has occurred\" | intext:\"incorrect syntax near\" | intext:\"unexpected end of SQL command\" | intext:\"Warning: mysql_connect()\" | intext:\"Warning: mysql_query()\" | intext:\"Warning: pg_connect()\""
+      ]
+    },
+    {
+      "category": "Exposed Security Certificates & SSH Keys",
+      "dorks": [
+        "site:{} intitle:\"index of\" inurl:/certs/",
+        "site:{} intext:\"PRIVATE KEY\" filetype:pem",
+        "site:{} inurl:/etc/nginx/certs filetype:key",
+        "site:{} intext:\"BEGIN RSA PRIVATE KEY\"",
+        "site:{} intext:\"-----BEGIN OPENVPN STATIC KEY V1-----\""
+      ]
+    },
+    {
+      "category": "Backup and old files",
+      "dorks": [
+        "site:{} intitle:\"index of\" inurl:/certs/",
+        "site:{} intext:\"PRIVATE KEY\" filetype:pem",
+        "site:{} inurl:/etc/nginx/certs filetype:key",
+        "site:{} intext:\"BEGIN RSA PRIVATE KEY\"",
+        "site:{} intext:\"-----BEGIN OPENVPN STATIC KEY V1-----\""
+      ]
+    },
+    {
+      "category": "Publicly Exposed Documents",
+      "dorks": [
+        "site:{} ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv"
+      ]
+    },
+    {
+      "category": "Find PasteBin Entries",
+      "dorks": [
+        "site:pastebin.com {}"
+      ]
+    },
+    {
+      "category": "Find Employees on LinkedIn",
+      "dorks": [
+        "site:linkedin.com employees {}"
+      ]
+    },
+    {
+      "category": "Find Subdomains",
+      "dorks": [
+        "site:*.{}"
+      ]
+    },
+    {
+      "category": "Find Sub-Subdomains",
+      "dorks": [
+        "site:*.*.{}"
+      ]
+    },
+    {
+      "category": "Find Crt.sh",
+      "dorks": [
+        "https://crt.sh/?q=%25.{}"
+      ]
+    },
+    {
+      "category": "Find Entries in Wayback Machine",
+      "dorks": [
+        "https://web.archive.org/web/*/{}/*"
+      ]
+    },
+    {
+      "category": "Search in Github",
+      "dorks": [
+        "https://github.com/search?q=%22*.{}%22&type=host"
+      ]
+    },
+    {
+      "category": "Search in Reddit",
+      "dorks": [
+        "https://www.reddit.com/search/?q={}&source=recent"
+      ]
+    },
+    {
+      "category": "Find Phpinfo and .htaccess",
+      "dorks": [
+        "site:{} inurl:\"/phpinfo.php\" | inurl:\".htaccess\" | inurl:\"/.git\" {} -github",
+        "site:{} ext:php intitle:phpinfo \"published by the PHP Group\""
+      ]
+    }
+  ]
+}

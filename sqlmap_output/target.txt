@@ -1,0 +1,1 @@
+http:// (GET)  # d:\WebDefender_Backend\WebDefender_API\helper\sqlmap-master\sqlmap.py -u  --batch --random-agent --level=5 --threads=5 --timeout=1 --time-sec=1 --fresh-queries --technique=U --flush-session --purge --tamper=space2comment,charencode --output-dir=sqlmap_output --dbs

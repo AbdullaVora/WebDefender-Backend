@@ -11,6 +11,8 @@ from routers.newScans.WHOISRoute import router as Whois_Route
 from routers.newScans.emailAuditRoute import router as email_Route
 from routers.newScans.JSParserRoute import router as JSParser_Route
 from routers.newScans.TechnologiesRouter import router as Technologies_Route
+from routers.newScans.CORSRouter import router as Cors_Route
+from routers.ReportsRouter import router as reports_router
 
 import os
 import uvicorn
@@ -24,7 +26,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://localhost:5174","http://localhost:5175"],  # Allow frontend origin
+    allow_origins=["http://localhost:5173","http://localhost:5174","http://localhost:5175", "https://web-defender-admin.vercel.app"],  # Allow frontend origin
     allow_credentials=True,
     allow_methods=["POST","GET","DELETE","PUT","PATCH"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
@@ -43,6 +45,9 @@ app.include_router(Whois_Route, prefix="/api/newScans")
 app.include_router(email_Route, prefix="/api/newScans")
 app.include_router(JSParser_Route, prefix="/api/newScans")
 app.include_router(Technologies_Route, prefix="/api/newScans")
+app.include_router(Cors_Route, prefix="/api/newScans")
+
+app.include_router(reports_router, prefix="/api")
 
 
 # Root endpoint

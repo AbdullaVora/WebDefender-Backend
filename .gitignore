@@ -21,3 +21,14 @@ build/
 config.json
 secrets.json
 .vercel
+
+
+__pycache__/
+.venv/
+*.pyc
+*.pyo
+*.pyd
+*.zip
+*.tar.gz
+tests/
+dev_scripts/

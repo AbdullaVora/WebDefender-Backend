@@ -5,13 +5,16 @@ from config.database import get_db
 from models.tools.subDomainModel import SubdomainScanRequest
 from datetime import datetime
 
-db = get_db()
+
 
 router = APIRouter()
 
 
 @router.post("/Subdomain-Reconnaissance")
 async def subdomain_scan(request: SubdomainScanRequest):
+
+    db = get_db()
+
     domain = request.domain.strip() if request.domain else None
     urls = request.custom.get("urls") if request.custom else None
     payloads = request.custom.get("payloads") if request.custom else None
@@ -105,6 +108,7 @@ async def subdomain_scan(request: SubdomainScanRequest):
 # ✅ Get Scan Status
 @router.get("/Subdomain-Reconnaissance-status/{domain}")
 async def get_scan_status(domain: str):
+    db = get_db()
     """Fetch scan results from MongoDB."""
     scan = await db.subdomain_reports.find_one({"domain": domain})
 
@@ -124,6 +128,7 @@ async def get_scan_status(domain: str):
 # ✅ Get All Scan Records
 @router.get("/all-scans")
 async def get_all_scans():
+    db = get_db()
     """Fetch all scans from MongoDB."""
     scans = []
     cursor = db.subdomain_reports.find()
@@ -134,6 +139,7 @@ async def get_all_scans():
 # ✅ Delete a Scan
 @router.delete("/delete-scan/{domain}")
 async def delete_scan(domain: str):
+    db = get_db()
     """Delete a scan result."""
     result = await db.subdomain_reports.delete_one({"domain": domain})
     if result.deleted_count == 0:

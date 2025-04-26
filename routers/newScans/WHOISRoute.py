@@ -3,7 +3,7 @@ from controllers.newScans.WHOIS import WhoisController
 from models.newScans.WHOISModel import WhoisRequest
 from config.database import get_db
 
-db = get_db()
+
 
 router = APIRouter()
 
@@ -20,6 +20,8 @@ async def post_whois_info(request: WhoisRequest):
     Returns:
     - WHOIS information in JSON format
     """
+    db = get_db()
+
     try:
         whois_data = WhoisController.fetch_whois_info(request.domain)
         

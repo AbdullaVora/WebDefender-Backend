@@ -129,7 +129,7 @@ from models.tools.XssModel import ScanRequest
 from controllers.tools import XSSController
 from config.database import get_db
 
-db = get_db()
+
 
 router = APIRouter()
 
@@ -145,6 +145,9 @@ def load_default_payloads():
 
 @router.post("/DOM-BasedXss")
 async def run_xss_scan(request_data: ScanRequest):
+
+    db = get_db()
+    
     # Setup in-memory logging
     log_stream = StringIO()
     stream_handler = logging.StreamHandler(log_stream)

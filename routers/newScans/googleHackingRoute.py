@@ -4,7 +4,7 @@ from controllers.newScans.googleHackingController import DorkController
 from models.newScans.googleHackingModel import SearchRequest
 from config.database import get_db
 
-db = get_db()
+
 
 router = APIRouter()
 
@@ -27,6 +27,7 @@ async def get_dorks():
 @router.post("/google-search")
 async def search(request: SearchRequest):
     """Perform Google dork search"""
+    db = get_db()
     try:
         result, status_code = dork_controller.perform_search(request.domain, request.dork)
         if status_code != 200:

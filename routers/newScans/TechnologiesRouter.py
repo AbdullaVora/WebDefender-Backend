@@ -4,7 +4,7 @@ from controllers.newScans.TechnologiesContoller import WappalyzerController
 from models.newScans.TechnologiesModel import WappalyzerScanResponse, WappalyzerScanHistory, WappalyzerScanRequest
 from config.database import get_db
 
-db = get_db()
+
 
 router = APIRouter()
 
@@ -16,6 +16,8 @@ async def scan_website(request: WappalyzerScanRequest):
     - **url**: Website URL to scan (e.g., "https://example.com")
     """
     # Access the url field from the request model
+    db = get_db()
+    
     if not request.url.startswith(('http://', 'https://')):
         raise HTTPException(
             status_code=422,

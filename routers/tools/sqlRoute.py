@@ -5,12 +5,13 @@ from models.tools.sqlModel import sqlModel
 from config.database import get_db
 from datetime import datetime
 
-db = get_db()
 
 router = APIRouter()
 
 @router.post("/SQLInjectionScanner")
 async def scan(request: sqlModel):
+    db = get_db()
+
     custom = request.custom or {}
     
     # Extract values from the request and custom dictionary

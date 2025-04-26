@@ -61,7 +61,7 @@ import io
 from config.database import get_db
 from datetime import datetime
 
-db = get_db()
+
 
 payload_path = r"D:\WebDefender_Backend\WebDefender_API\helper\payloads\dirbrute2.txt"
 
@@ -96,6 +96,7 @@ class LogCapture:
 
 @router.post("/Hidden-Files-Reconnaissance")
 async def start_scan(request: ScanRequest):
+    db = get_db()
     # Initialize log capture
     log_capture = LogCapture()
     log_capture.start_capture()

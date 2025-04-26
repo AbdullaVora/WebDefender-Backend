@@ -30,7 +30,7 @@
 # # Example of using async function
 # import asyncio
 # db = asyncio.run(connect_to_mongo())
-
+# config/database.py
 from motor.motor_asyncio import AsyncIOMotorClient
 from config.settings import MONGO_URI
 
@@ -41,11 +41,12 @@ async def connect_to_mongo():
     try:
         client = AsyncIOMotorClient(MONGO_URI, serverSelectionTimeoutMS=60000)
         db = client.get_database()
-        print(f"✅ Successfully connected to MongoDB: {db.name}")
+        print(f"✅ Connected to MongoDB: {db.name}")
     except Exception as e:
-        print(f"❌ MongoDB Connection Error: {e}")
+        print(f"❌ MongoDB connection error: {e}")
 
 def get_db():
+    global db
     if db is None:
         raise Exception("Database not initialized. Please wait for startup.")
     return db

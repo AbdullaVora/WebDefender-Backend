@@ -3,11 +3,14 @@ from fastapi import APIRouter, HTTPException, Query
 from config.database import get_db
 import asyncio
 
-db = get_db()
+
 
 router = APIRouter()
 
 async def fetch_data(collection_name: str, user_id: str = None):
+
+    db = get_db()
+
     collection = db[collection_name]
     results = []
     try:

@@ -5,7 +5,6 @@ from models.newScans.emailAuditModel import EmailSecurityResponse, EmailSecurity
 import dns.resolver
 from config.database import get_db
 
-db = get_db()
 
 router = APIRouter()
 
@@ -26,6 +25,7 @@ async def check_email_security(request: EmailSecurityRequest):
         "dkim_selector": "optional_selector"
     }
     """
+    db = get_db()
     controller = EmailSecurityController()
     try:
         data = controller.check_email_security(

@@ -56,7 +56,7 @@ app.include_router(reports_router, prefix="/api")
 @app.on_event("startup")
 async def startup_db_client():
     await connect_to_mongo()
-
+    
 # Root endpoint
 @app.get("/")   
 async def home():

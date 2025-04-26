@@ -5,7 +5,7 @@ from models.newScans.JSParserModel import ScanRequest
 import json
 from config.database import get_db
 
-db = get_db()
+
 
 router = APIRouter()
 
@@ -16,6 +16,8 @@ async def scan_website(request: ScanRequest):
     
     - **url**: Website URL to scan (e.g., https://example.com)
     """
+    db = get_db()
+    
     try:
         results = SecretScanner.scan_target(request.domain)
         result = {

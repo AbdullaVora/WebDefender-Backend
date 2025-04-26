@@ -61,7 +61,7 @@ import sys
 from config.database import get_db
 from datetime import datetime
 
-db = get_db()
+
 
 # Add the project root to Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -76,6 +76,9 @@ router = APIRouter()
 
 @router.post("/WAFDetector", response_model=List[Dict[str, Any]])
 async def scan_endpoint(scan_request: ScanRequest = Body(...)):
+
+    db = get_db()
+
     targets = []
     
     if hasattr(scan_request, 'custom') and scan_request.custom:

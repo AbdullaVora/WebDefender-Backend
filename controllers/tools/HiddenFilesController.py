@@ -32,7 +32,11 @@ USER_AGENTS = [
     "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 Chrome/110.0.0.0"
 ]
 
-payload_path = r"helper\payloads\dirbrute.txt"
+# payload_path = r"helper\payloads\dirbrute.txt"
+
+payload_path = os.path.join('helper', 'payloads', 'dirbrute.txt')
+
+
 
 # Dynamic Cookie Generation
 def get_cookies(url):

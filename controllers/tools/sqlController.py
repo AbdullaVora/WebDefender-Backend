@@ -112,7 +112,9 @@ DEFAULT_PROXY = None  # Proxy disabled by default
 
 vulnerabilities = []
 
-SQLMAP_PATH = r"helper\sqlmap-master\sqlmap.py"
+# SQLMAP_PATH = r"helper\sqlmap-master\sqlmap.py"
+
+SQLMAP_PATH = os.path.join('helper', 'sqlmap-master', 'sqlmap.py')
 
 
 if os.path.exists(OUTPUT_FILE):

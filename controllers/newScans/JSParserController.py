@@ -5,22 +5,20 @@ from fastapi import HTTPException
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
-
-# Setup paths - Adjusted for your specific directory structure
-# Go up from controller location (controllers/newScans/) to project root (helper/)
-# PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # Goes from controllers/newScans/ to controllers/
-# KATANA_PATH = PROJECT_DIR / "helper" / "newScans" / "JsParser" / "katana" / "katana.exe"
-# SECRET_FINDER_PATH = PROJECT_DIR / "helper" / "newScans" / "JsParser" / "SecretFinder" / "SecretFinder.py"
-# KATANA_OUTPUT = PROJECT_DIR / "helper" / "newScans" / "JsParser" / "katana.txt"
-# JSON_OUTPUT = PROJECT_DIR / "helper" / "newScans" / "JsParser" / "secrets_output.json"
+import os
 
 console = Console()
 
 # PROJECT_DIR = Path(__file__).resolve().parent.parent  # Goes from controllers/newScans/ to controllers/
-KATANA_PATH = r"helper\newScans\JSParser\katana\katana.exe"
-SECRET_FINDER_PATH = r"helper\newScans\JSParser\SecretFinder\SecretFinder.py"
-KATANA_OUTPUT = r"helper\newScans\JSParser\katana.txt"  # Now a file
-JSON_OUTPUT = r"helper\newScans\JSParser\secrets_output.json"  # Now a file
+# KATANA_PATH = r"helper\newScans\JSParser\katana\katana.exe"
+# SECRET_FINDER_PATH = r"helper\newScans\JSParser\SecretFinder\SecretFinder.py"
+# KATANA_OUTPUT = r"helper\newScans\JSParser\katana.txt"  # Now a file
+# JSON_OUTPUT = r"helper\newScans\JSParser\secrets_output.json"  # Now a file
+
+KATANA_PATH = os.path.join('helper', 'newScans', 'JSParser' , 'katana', 'katana.exe')
+SECRET_FINDER_PATH = os.path.join('helper', 'newScans', 'JSParser' , 'SecretFinder', 'SecretFinder.py')
+KATANA_OUTPUT = os.path.join('helper', 'newScans', 'JSParser' , 'katana.txt')  # Now a file
+JSON_OUTPUT = os.path.join('helper', 'newScans', 'JSParser' , 'secrets_output.json')  # Now a file
 
 
 class SecretScanner:

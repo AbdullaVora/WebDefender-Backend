@@ -3,7 +3,9 @@ from typing import Optional
 from controllers.newScans.JSParserController import SecretScanner
 from models.newScans.JSParserModel import ScanRequest
 import json
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

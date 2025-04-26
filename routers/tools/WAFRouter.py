@@ -58,8 +58,10 @@ import asyncio
 import json
 import os
 import sys
-from config.database import db
+from config.database import get_db
 from datetime import datetime
+
+db = get_db()
 
 # Add the project root to Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))

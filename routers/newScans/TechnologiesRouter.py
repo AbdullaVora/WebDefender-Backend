@@ -2,7 +2,9 @@ from fastapi import APIRouter, HTTPException, status
 from typing import List
 from controllers.newScans.TechnologiesContoller import WappalyzerController
 from models.newScans.TechnologiesModel import WappalyzerScanResponse, WappalyzerScanHistory, WappalyzerScanRequest
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from motor.motor_asyncio import AsyncIOMotorClient
 from controllers.tools.subDomainController import SubdomainScanner  # Ensure correct import
-from config.database import db
+from config.database import get_db
 from models.tools.subDomainModel import SubdomainScanRequest
-from config.database import db
 from datetime import datetime
+
+db = get_db()
 
 router = APIRouter()
 

@@ -127,7 +127,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from models.tools.XssModel import ScanRequest
 from controllers.tools import XSSController
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

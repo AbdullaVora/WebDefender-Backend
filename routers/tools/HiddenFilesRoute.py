@@ -58,8 +58,10 @@ import uuid
 from controllers.tools.HiddenFilesController import run_dirsearch
 from models.tools.HiddenFilesModel import ScanRequest
 import io
-from config.database import db
+from config.database import get_db
 from datetime import datetime
+
+db = get_db()
 
 payload_path = r"D:\WebDefender_Backend\WebDefender_API\helper\payloads\dirbrute2.txt"
 

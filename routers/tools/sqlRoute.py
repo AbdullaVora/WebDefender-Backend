@@ -2,8 +2,10 @@
 from fastapi import APIRouter, HTTPException
 from controllers.tools.sqlController import scan_url
 from models.tools.sqlModel import sqlModel
-from config.database import db
+from config.database import get_db
 from datetime import datetime
+
+db = get_db()
 
 router = APIRouter()
 

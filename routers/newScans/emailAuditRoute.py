@@ -3,7 +3,9 @@ from fastapi import APIRouter, HTTPException, Depends
 from controllers.newScans.emailAuditController import EmailSecurityController
 from models.newScans.emailAuditModel import EmailSecurityResponse, EmailSecurityRequest
 import dns.resolver
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

@@ -2,7 +2,9 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from controllers.newScans.googleHackingController import DorkController
 from models.newScans.googleHackingModel import SearchRequest
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

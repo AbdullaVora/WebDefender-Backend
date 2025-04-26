@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Body, HTTPException
 from controllers.newScans.WHOIS import WhoisController
 from models.newScans.WHOISModel import WhoisRequest
-from config.database import db
+from config.database import get_db
+
+db = get_db()
 
 router = APIRouter()
 

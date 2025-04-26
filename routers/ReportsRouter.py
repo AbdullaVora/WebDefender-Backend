@@ -1,7 +1,9 @@
 # routers/alldata.py
 from fastapi import APIRouter, HTTPException, Query
-from config.database import db
+from config.database import get_db
 import asyncio
+
+db = get_db()
 
 router = APIRouter()
 

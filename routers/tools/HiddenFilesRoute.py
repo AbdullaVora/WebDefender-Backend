@@ -59,6 +59,7 @@ from controllers.tools.HiddenFilesController import run_dirsearch
 from models.tools.HiddenFilesModel import ScanRequest
 import io
 from config.database import db
+from datetime import datetime
 
 payload_path = r"D:\WebDefender_Backend\WebDefender_API\helper\payloads\dirbrute2.txt"
 
@@ -141,7 +142,10 @@ async def start_scan(request: ScanRequest):
                     "scan_id": scan_id,
                     "status": "completed",
                     "results": all_results,
-                    "logs": log_capture.get_logs()
+                    "logs": log_capture.get_logs(),
+                    "scanStatus": "success",
+                    "created_time": datetime.utcnow().isoformat() 
+
                 })
                 if db is not None:
                     try:

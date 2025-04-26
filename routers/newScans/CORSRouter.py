@@ -1,51 +1,77 @@
-# routers/cors_router.py
-from fastapi import APIRouter, HTTPException, BackgroundTasks, Query, status, Depends
-from typing import List, Optional, Dict, Any
+# from fastapi import APIRouter, HTTPException
+# from models.newScans.CORSModel import ScanRequest, ScanBatchRequest, ScanResponse
+# from controllers.newScans.CORSController import ScanController
 
-from models.newScans.CORSModel import ScanRequest, ScanResponse, ScanStatus, ScanFileRequest
-from controllers.newScans.CORSController import CorsController
+# router = APIRouter()
+
+# controller = ScanController()
+
+# @router.post("/CORS", response_model=ScanResponse)
+# async def scan_single_target(request: ScanRequest):
+#     return controller.scan_single_target(
+#         target=request.target,
+#         threads=request.threads,
+#         delay=request.delay,
+#         cookies=request.cookies
+#     )
+
+# @router.post("/batch", response_model=ScanResponse)
+# async def scan_batch_targets(request: ScanBatchRequest):
+#     return controller.scan_batch_targets(
+#         targets=request.targets,
+#         threads=request.threads,
+#         delay=request.delay,
+#         cookies=request.cookies
+#     )
+
+from fastapi import APIRouter, HTTPException
+from models.newScans.CORSModel import ScanRequest, ScanBatchRequest, ScanResponse
+from controllers.newScans.CORSController import ScanController
 
 router = APIRouter()
 
-@router.post("/CORS", response_model=ScanResponse, status_code=status.HTTP_202_ACCEPTED)
-async def start_scan(scan_request: ScanRequest, background_tasks: BackgroundTasks):
-    """
-    Start a new CORS scan for the provided URLs
-    """
-    return await CorsController.start_scan(scan_request, background_tasks)
+controller = ScanController()
 
-@router.post("/scan/file", response_model=ScanResponse, status_code=status.HTTP_202_ACCEPTED)
-async def scan_from_file(scan_request: ScanFileRequest, background_tasks: BackgroundTasks):
+@router.post("/CORS", response_model=ScanResponse, summary="Scan single target for CORS vulnerabilities")
+async def scan_single_target(request: ScanRequest):
     """
-    Start a new CORS scan using URLs from a file
+    Scan a single target for CORS misconfigurations.
+    
+    Parameters:
+    - target: URL to scan (can be with or without protocol)
+    - threads: Number of threads to use (default: 5)
+    - delay: Delay between requests in seconds (default: 0)
+    - cookies: Optional cookies to include in requests
+    
+    Returns:
+    - Scan results with vulnerabilities found
+    - Detailed scan logs
     """
-    return await CorsController.scan_from_file(scan_request, background_tasks)
+    return controller.scan_single_target(
+        domain=request.domain,
+        threads=request.threads,
+        delay=request.delay,
+        cookies=request.cookies
+    )
 
-@router.get("/scan/{scan_id}", response_model=ScanStatus)
-async def get_scan_status(scan_id: str):
+@router.post("/CORSScan", response_model=ScanResponse, summary="Scan multiple targets for CORS vulnerabilities")
+async def scan_batch_targets(request: ScanBatchRequest):
     """
-    Get the status of a running or completed scan
+    Scan multiple targets for CORS misconfigurations in batch mode.
+    
+    Parameters:
+    - targets: List of URLs to scan
+    - threads: Number of threads to use (default: 5)
+    - delay: Delay between requests in seconds (default: 0)
+    - cookies: Optional cookies to include in requests
+    
+    Returns:
+    - Scan results with vulnerabilities found
+    - Detailed scan logs
     """
-    return await CorsController.get_scan_status(scan_id)
-
-@router.get("/scans", response_model=List[str])
-async def list_scans():
-    """
-    List all scan IDs
-    """
-    return await CorsController.list_scans()
-
-@router.delete("/scan/{scan_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_scan(scan_id: str):
-    """
-    Delete a scan from storage
-    """
-    await CorsController.delete_scan(scan_id)
-    return None
-
-@router.post("/scan/{scan_id}/save", response_model=Dict[str, Any])
-async def save_results(scan_id: str, file_path: str = Query(..., description="Path to save results")):
-    """
-    Save scan results to a file
-    """
-    return await CorsController.save_results_to_file(scan_id, file_path)
+    return controller.scan_batch_targets(
+        domains=request.domains,
+        threads=request.threads,
+        delay=request.delay,
+        cookies=request.cookies
+    )

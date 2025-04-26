@@ -1,0 +1,13 @@
+2025-04-25 21:13:29,547 - Starting scan for target: bmusurat.ac.in
+2025-04-25 21:13:29,548 - Resolving domain: bmusurat.ac.in
+2025-04-25 21:13:29,613 - Resolved domain bmusurat.ac.in to IP 104.21.84.27
+2025-04-25 21:13:29,614 - Using IP directly as URL: http://104.21.84.27
+2025-04-25 21:13:29,615 - Sending request to http://104.21.84.27
+2025-04-25 21:13:29,849 - Received response with status code: 403
+2025-04-25 21:13:29,850 - Response headers: {"Date": "Fri, 25 Apr 2025 15:43:34 GMT", "Content-Type": "text/html; charset=UTF-8", "Transfer-Encoding": "chunked", "Connection": "close", "X-Frame-Options": "SAMEORIGIN", "Referrer-Policy": "same-origin", "Cache-Control": "private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0", "Expires": "Thu, 01 Jan 1970 00:00:01 GMT", "Vary": "Accept-Encoding", "Server": "cloudflare", "CF-RAY": "935ef4f37c909c32-SIN", "Content-Encoding": "gzip"}
+2025-04-25 21:13:29,851 - Detected WAF: Cloudflare
+2025-04-25 21:13:29,852 - Could not identify server type
+2025-04-25 21:13:29,853 - Getting geo information for IP: 104.21.84.27
+2025-04-25 21:13:30,252 - IP info retrieved: San Francisco, California, AS13335 Cloudflare, Inc.
+2025-04-25 21:13:31,499 - Geocoded location: 37.7792588, -122.4193286
+2025-04-25 21:13:31,507 - Scan completed for bmusurat.ac.in. Results saved to data/bmusurat_ac_in_20250425211329_result.json

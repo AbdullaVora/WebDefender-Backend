@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 class TechnologyInfo(BaseModel):
@@ -9,6 +9,9 @@ class TechnologyInfo(BaseModel):
 class WappalyzerScanResponse(BaseModel):
     website: str
     detected_technologies: Dict[str, List[TechnologyInfo]]
+    created_time: datetime = Field(default_factory=datetime.utcnow)
+    scanStatus: str = "success"
+
 
 class WappalyzerScanRequest(BaseModel):  # New model for request validation
     url: str

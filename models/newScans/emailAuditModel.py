@@ -1,6 +1,7 @@
 # models/newScans/emailAuditModel.py
 from pydantic import BaseModel, Field
 from typing import Dict, List, Any, Optional
+from datetime import datetime
 
 # Request model
 class EmailSecurityRequest(BaseModel):
@@ -26,6 +27,9 @@ class EmailSecurityResponse(BaseModel):
     MX: List[str]
     DNSSEC: str
     AuditSummary: Dict[str, str]
+    created_time: datetime = Field(default_factory=datetime.utcnow)
+    scanStatus: str = "success"
+
 
 # Model for the underlying business logic
 class EmailSecurityModel:

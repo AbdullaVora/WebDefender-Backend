@@ -1,12 +1,14 @@
-# models/cors_models.py
-from pydantic import BaseModel, Field
-from typing import List, Optional, Dict
+from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
+from enum import Enum
+from datetime import datetime
 
-class ScanRequest(BaseModel):
-    urls: List[str] = Field(..., description="List of URLs to scan")
-    thread_count: int = Field(5, description="Number of threads for scanning")
-    delay: float = Field(0, description="Delay between requests in seconds")
-    headers: Optional[Dict[str, str]] = Field(None, description="Additional headers for requests")
+class SeverityLevel(str, Enum):
+    info = "info"
+    low = "low"
+    medium = "medium"
+    high = "high"
+    unknown = "unknown"
 
 class ScanResult(BaseModel):
     timestamp: str
@@ -14,23 +16,28 @@ class ScanResult(BaseModel):
     origin: str
     classification: str
     description: str
-    severity: str
+    severity: SeverityLevel
     exploitation: str
     allow_credentials: Optional[str]
     http_status: int
 
-class ScanResponse(BaseModel):
-    scan_id: str
+class ScanRequest(BaseModel):
+    domain: str
+    threads: int = 5
+    delay: float = 0
+    cookies: Optional[str] = None
+
+class ScanBatchRequest(BaseModel):
+    domains: List[str]
+    threads: int = 5
+    delay: float = 0
+    cookies: Optional[str] = None
+
+class ScanLog(BaseModel):
     message: str
+    level: str  # "info", "warning", "error"
+    timestamp: str
 
-class ScanStatus(BaseModel):
-    scan_id: str
-    status: str
-    progress: float
-    results: Optional[List[ScanResult]] = None
-
-class ScanFileRequest(BaseModel):
-    file_path: str = Field(..., description="Path to file containing URLs")
-    thread_count: int = Field(5, description="Number of threads for scanning")
-    delay: float = Field(0, description="Delay between requests in seconds")
-    headers: Optional[Dict[str, str]] = Field(None, description="Additional headers for requests")
+class ScanResponse(BaseModel):
+    results: List[ScanResult]
+    logs: List[ScanLog]

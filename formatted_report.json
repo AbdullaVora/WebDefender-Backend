@@ -1,6 +1,6 @@
 {
     "scan_info": {
-        "target": "/uploads/64.php",
+        "target": "http://testphp.vulnweb.com",
         "extensions": [
             "php",
             "html",

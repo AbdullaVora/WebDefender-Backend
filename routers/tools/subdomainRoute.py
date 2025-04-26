@@ -4,6 +4,7 @@ from controllers.tools.subDomainController import SubdomainScanner  # Ensure cor
 from config.database import db
 from models.tools.subDomainModel import SubdomainScanRequest
 from config.database import db
+from datetime import datetime
 
 router = APIRouter()
 
@@ -50,7 +51,9 @@ async def subdomain_scan(request: SubdomainScanRequest):
         "userId": userId,
         "status": 200,
         "message": f"Scan completed for {targets}",
-        "results": scan_results  # ✅ Full scan results returned as a list
+        "results": scan_results,  # ✅ Full scan results returned as a list
+        "created_time": datetime.utcnow().isoformat(), 
+        "scanStatus": "success"
     }
 
     if db is not None:

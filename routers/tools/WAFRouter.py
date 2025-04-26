@@ -59,6 +59,7 @@ import json
 import os
 import sys
 from config.database import db
+from datetime import datetime
 
 # Add the project root to Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -112,6 +113,8 @@ async def scan_endpoint(scan_request: ScanRequest = Body(...)):
             for result in results:
                 mongo_result = result.copy()  # Ensure it's serializable
                 mongo_result['userId'] = scan_request.userId  # ✅ Add this line
+                mongo_result['scanStatus'] = "success"
+                mongo_result['created_time'] = datetime.utcnow().isoformat()
                 insert_result = await db.Waf_Report.insert_one(mongo_result)
         except Exception as e:
             print(f"[❌] Error saving to MongoDB: {e}")

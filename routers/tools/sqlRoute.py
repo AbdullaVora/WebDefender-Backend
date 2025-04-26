@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException
 from controllers.tools.sqlController import scan_url
 from models.tools.sqlModel import sqlModel
 from config.database import db
+from datetime import datetime
 
 router = APIRouter()
 
@@ -36,7 +37,9 @@ async def scan(request: sqlModel):
         "user_id": request.userId,
         "status": "200",
         "message": "Scan completed",
-        "results": results
+        "results": results,
+        "created_time": datetime.utcnow().isoformat(), 
+        "scanStatus": "success"
     }
 
     if db is not None:

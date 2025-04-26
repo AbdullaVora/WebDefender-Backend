@@ -17,10 +17,10 @@ from rich.progress import track
 console = Console()
 
 # PROJECT_DIR = Path(__file__).resolve().parent.parent  # Goes from controllers/newScans/ to controllers/
-KATANA_PATH = r"D:\WebDefender_Backend\WebDefender_API\helper\newScans\JSParser\katana\katana.exe"
-SECRET_FINDER_PATH = r"D:\WebDefender_Backend\WebDefender_API\helper\newScans\JSParser\SecretFinder\SecretFinder.py"
-KATANA_OUTPUT = r"D:\WebDefender_Backend\WebDefender_API\helper\newScans\JSParser\katana.txt"  # Now a file
-JSON_OUTPUT = r"D:\WebDefender_Backend\WebDefender_API\helper\newScans\JSParser\secrets_output.json"  # Now a file
+KATANA_PATH = r"helper\newScans\JSParser\katana\katana.exe"
+SECRET_FINDER_PATH = r"helper\newScans\JSParser\SecretFinder\SecretFinder.py"
+KATANA_OUTPUT = r"helper\newScans\JSParser\katana.txt"  # Now a file
+JSON_OUTPUT = r"helper\newScans\JSParser\secrets_output.json"  # Now a file
 
 
 class SecretScanner:

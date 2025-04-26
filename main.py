@@ -52,12 +52,12 @@ app.include_router(Cors_Route, prefix="/api/newScans")
 app.include_router(reports_router, prefix="/api")
 
 
-# @app.on_event("startup")
-# async def startup_event():
-#     await connect_to_mongo()
-#     print("🚀 MongoDB connected during startup.")
 
-# # Root endpoint
+@app.on_event("startup")
+async def startup_db_client():
+    await connect_to_mongo()
+
+# Root endpoint
 @app.get("/")   
 async def home():
     return "Server is running successfully"

@@ -1,4 +1,4 @@
-from config.database import db
+from config.database import get_db
 from models.userModel import UserModel
 from fastapi import HTTPException
 from pymongo.errors import PyMongoError
@@ -16,6 +16,7 @@ class UserController:
     @staticmethod
     async def register_user(register: UserModel):
         try:
+            db = get_db()
             # Step 1: Convert request model to dictionary
             user_dict = register.model_dump()
 
@@ -83,6 +84,7 @@ class UserController:
     @staticmethod
     async def login_user(email: str, password: str):
         try:
+            db = get_db()  # Get the database instance
             print(email, password)
             # step 1 find user
             user = await db.users.find_one({"email": email})

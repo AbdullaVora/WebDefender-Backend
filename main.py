@@ -14,6 +14,8 @@ from routers.newScans.TechnologiesRouter import router as Technologies_Route
 from routers.newScans.CORSRouter import router as Cors_Route
 from routers.ReportsRouter import router as reports_router
 
+from config.database import db, connect_to_mongo
+
 import os
 import uvicorn
 
@@ -49,6 +51,11 @@ app.include_router(Cors_Route, prefix="/api/newScans")
 
 app.include_router(reports_router, prefix="/api")
 
+
+@app.on_event("startup")
+async def startup_event():
+    await connect_to_mongo()
+    print("🚀 MongoDB connected during startup.")
 
 # Root endpoint
 @app.get("/")   

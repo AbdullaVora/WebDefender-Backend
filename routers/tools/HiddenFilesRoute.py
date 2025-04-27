@@ -60,10 +60,11 @@ from models.tools.HiddenFilesModel import ScanRequest
 import io
 from config.database import get_db
 from datetime import datetime
+import os
 
 
 
-payload_path = r"D:\WebDefender_Backend\WebDefender_API\helper\payloads\dirbrute2.txt"
+payload_path = os.path.join('helper', 'payloads', 'dirbrute2.txt')
 
 router = APIRouter()
 

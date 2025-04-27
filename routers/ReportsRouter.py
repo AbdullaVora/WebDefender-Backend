@@ -33,9 +33,10 @@ async def get_all_data(userId: str = Query(None)):
         Waf_Report = fetch_data("Waf_Report", userId)
         JsParser_Report = fetch_data("JsParser_Report", userId)
         EmailAudit_Report = fetch_data("EmailAudit_Report", userId)
+        Whois_Report = fetch_data("Whois_Report", userId)
 
-        subdomain_reports, sql_reports, hidden_files, Xss_Report, Waf_Report, JsParser_Report, EmailAudit_Report = await asyncio.gather(
-            subdomain_reports, sql_reports, hidden_files, Xss_Report, Waf_Report, JsParser_Report, EmailAudit_Report
+        subdomain_reports, sql_reports, hidden_files, Xss_Report, Waf_Report, JsParser_Report, EmailAudit_Report, Whois_Report = await asyncio.gather(
+            subdomain_reports, sql_reports, hidden_files, Xss_Report, Waf_Report, JsParser_Report, EmailAudit_Report, Whois_Report
         )
 
         return {
@@ -45,7 +46,8 @@ async def get_all_data(userId: str = Query(None)):
             "Xss_Report": Xss_Report,
             "Waf_Report": Waf_Report,
             "JsParser_Report": JsParser_Report,
-            "EmailAudit_Report": EmailAudit_Report
+            "EmailAudit_Report": EmailAudit_Report,
+            "Whois_Report": Whois_Report
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

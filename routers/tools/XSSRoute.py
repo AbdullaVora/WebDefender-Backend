@@ -138,10 +138,12 @@ def get_chrome_driver(options):
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 
-def load_default_payloads():
-    with open("D:/WebDefender_Backend/WebDefender_API/helper/payloads/optimized_reflected_xss.txt", "r") as file:
-        return [line.strip() for line in file if line.strip()]
+import os
 
+def load_default_payloads():
+    payloads_path = os.path.join("helper", "payloads", "optimized_reflected_xss.txt")
+    with open(payloads_path, "r") as file:
+        return [line.strip() for line in file if line.strip()]
 
 @router.post("/DOM-BasedXss")
 async def run_xss_scan(request_data: ScanRequest):

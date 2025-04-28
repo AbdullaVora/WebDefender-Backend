@@ -140,7 +140,7 @@ async def start_scan(request: ScanRequest):
                     })
             
             if all_results:
-                data = JSONResponse(content={
+                data = {
                     "scanType": "Hidden-Files-Reconnaissance",
                     "user_id": request.userId,
                     "scan_id": scan_id,
@@ -150,7 +150,7 @@ async def start_scan(request: ScanRequest):
                     "scanStatus": "success",
                     "created_time": datetime.utcnow().isoformat() 
 
-                })
+                }
                 if db is not None:
                     try:
                         # Create a serializable version of the result for MongoDB
@@ -181,7 +181,7 @@ async def start_scan(request: ScanRequest):
             )
             
             if scan_result:
-                data = JSONResponse(content={
+                data = {
                     "scanType": "Hidden-Files-Reconnaissance",
                     "user_id": request.userId,
                     "scan_id": scan_id,
@@ -189,7 +189,7 @@ async def start_scan(request: ScanRequest):
                     "scan_info": scan_result["scan_info"],
                     "results": scan_result["results"],
                     "logs": log_capture.get_logs()
-                })
+                }
         
                 if db is not None:
                     try:

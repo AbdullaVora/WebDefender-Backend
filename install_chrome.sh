@@ -1,17 +1,29 @@
 #!/bin/bash
-# Install dependencies
+# Ensure the script exits on any error
+set -e
+
+echo "Starting Chrome installation..."
+
+# Create a temporary directory for downloads
+mkdir -p /tmp/chrome_install
+cd /tmp/chrome_install
+
+# Download Chrome
+echo "Downloading Chrome..."
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+# Install Chrome and dependencies
+echo "Installing Chrome dependencies..."
 apt-get update
-apt-get install -y wget gnupg2 apt-transport-https
+apt-get install -y ./google-chrome-stable_current_amd64.deb
 
-# Add Google Chrome repository key
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-
-# Add Google Chrome repository
-echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-
-# Install Google Chrome
-apt-get update
-apt-get install -y google-chrome-stable
-
-# Verify the installation
+# Verify installation
+echo "Verifying Chrome installation..."
 google-chrome --version
+
+# Clean up
+echo "Cleaning up..."
+cd -
+rm -rf /tmp/chrome_install
+
+echo "Chrome installation completed successfully!"

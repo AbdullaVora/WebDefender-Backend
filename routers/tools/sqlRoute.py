@@ -37,7 +37,7 @@ async def scan(request: sqlModel):
 
     data = {
         "scanType": "SQLInjectionScanner",
-        "user_id": request.userId,
+        "userId": request.userId,
         "status": "200",
         "message": "Scan completed",
         "results": results,
@@ -48,9 +48,8 @@ async def scan(request: sqlModel):
     if db is not None:
         try:
             # Create a serializable version of the result for MongoDB
-            mongo_result = data.copy()
-            insert_result = await db.sql_reports.insert_one(mongo_result)
-            
+            mongo_result = data.copy()    
+            insert_result = await db.sql_reports.insert_one(mongo_result)      
             # Return a clean result with string ID
             data["_id"] = str(insert_result.inserted_id)
             print("[✔] Stored in MongoDB with ID:", data["_id"])

@@ -4,3 +4,9 @@
 2025-04-25 21:13:29,853 - 20250425211329 - bmusurat.ac.in - Server detection took 0.00 seconds
 2025-04-25 21:13:31,499 - 20250425211329 - bmusurat.ac.in - Geo info lookup took 1.65 seconds
 2025-04-25 21:13:31,505 - 20250425211329 - bmusurat.ac.in - Total scan took 1.89 seconds
+2025-04-28 23:52:24,006 - 20250428235223 - bmusurat.ac.in - IP resolution took 0.09 seconds
+2025-04-28 23:52:24,341 - 20250428235223 - bmusurat.ac.in - HTTP request took 0.33 seconds
+2025-04-28 23:52:24,344 - 20250428235223 - bmusurat.ac.in - WAF detection took 0.00 seconds
+2025-04-28 23:52:24,345 - 20250428235223 - bmusurat.ac.in - Server detection took 0.00 seconds
+2025-04-28 23:52:26,257 - 20250428235223 - bmusurat.ac.in - Geo info lookup took 1.91 seconds
+2025-04-28 23:52:26,264 - 20250428235223 - bmusurat.ac.in - Total scan took 2.26 seconds

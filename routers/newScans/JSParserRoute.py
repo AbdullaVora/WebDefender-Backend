@@ -28,7 +28,7 @@ async def scan_website(request: ScanRequest):
         if db is not None:
             try:
                 mongo_result = result.copy()  # Ensure it's serializable
-                mongo_result['user_id'] = request.userId
+                mongo_result['userId'] = request.userId
                 insert_result = await db.JsParser_Report.insert_one(mongo_result)
             except Exception as e:
                 print(f"[❌] Error saving to MongoDB: {e}")

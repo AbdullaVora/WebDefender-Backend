@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: your-app-name  # Replace with your application name
+    env: python
+    buildCommand: |
+      # Make the Chrome installation script executable
+      chmod +x ./install_chrome.sh
+      # Run the Chrome installation script with sudo
+      sudo ./install_chrome.sh
+      # Continue with your regular build command
+      pip install -r requirements.txt
+      # Add any other build commands here
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    # Add your environment variables as needed
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11  # Use your required Python version
+      # Add other environment variables as needed

@@ -24,13 +24,18 @@ class ScanResult(BaseModel):
 class ScanRequest(BaseModel):
     domain: str
     threads: int = 5
-    delay: float = 0
+    retries: int = 3  # Add this
+    delay: float = 0.3
+    timeout: int = 30  # Add this
     cookies: Optional[str] = None
+
 
 class ScanBatchRequest(BaseModel):
     domains: List[str]
     threads: int = 5
-    delay: float = 0
+    retries: int = 3  # Add this
+    delay: float = 0.3
+    timeout: int = 30  # Add this
     cookies: Optional[str] = None
 
 class ScanLog(BaseModel):

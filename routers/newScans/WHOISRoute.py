@@ -31,7 +31,7 @@ async def post_whois_info(request: WhoisRequest):
             
         result = {
             "scanType": "WHOIS",
-            "user_id": request.userId,
+            "userId": request.userId,
             "status": "success",
             "domain": request.domain,
             "data": whois_data
@@ -40,9 +40,11 @@ async def post_whois_info(request: WhoisRequest):
         if db is not None:
             try:
                 mongo_result = result.copy()  # Ensure it's serializable
+                mongo_result['user_id'] = request.userId
                 insert_result = await db.Whois_Report.insert_one(mongo_result)
             except Exception as e:
                 print(f"[❌] Error saving to MongoDB: {e}")
+
 
         return result
     except HTTPException as he:

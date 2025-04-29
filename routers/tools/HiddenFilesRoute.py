@@ -142,7 +142,7 @@ async def start_scan(request: ScanRequest):
             if all_results:
                 data = {
                     "scanType": "Hidden-Files-Reconnaissance",
-                    "user_id": request.userId,
+                    "userId": request.userId,
                     "scan_id": scan_id,
                     "status": "completed",
                     "results": all_results,
@@ -183,7 +183,7 @@ async def start_scan(request: ScanRequest):
             if scan_result:
                 data = {
                     "scanType": "Hidden-Files-Reconnaissance",
-                    "user_id": request.userId,
+                    "userId": request.userId,
                     "scan_id": scan_id,
                     "status": "completed",
                     "scan_info": scan_result["scan_info"],

@@ -141,6 +141,7 @@ import subprocess
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
 from models.tools.XssModel import ScanRequest
 from controllers.tools import XSSController
@@ -155,68 +156,63 @@ def get_chrome_driver(options):
     Create and return a Chrome WebDriver with configured options.
     This function handles different environments (local vs cloud hosting like Render).
     """
-    # Check if we're in a cloud environment (most likely Render)
-    is_render = "RENDER" in os.environ
-    
     # Add essential options for headless environments
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     
-    if is_render:
-        # Try to install Chrome if it's not available (Render specific)
-        try:
-            # Check if Chrome is already installed
-            chrome_installed = False
-            try:
-                subprocess.run(['google-chrome', '--version'], 
-                               stdout=subprocess.PIPE, 
-                               stderr=subprocess.PIPE, 
-                               check=True)
-                chrome_installed = True
-            except (subprocess.SubprocessError, FileNotFoundError):
-                pass
-            
-            if not chrome_installed:
-                logging.info("Chrome not found, attempting to install...")
-                # Log the attempt to install Chrome
-                logging.info("Chrome installation may require additional setup in Render")
-        except Exception as e:
-            logging.error(f"Error checking/installing Chrome: {str(e)}")
+    # For Render environment, we need to use ChromeDriver's remote debugging
+    if "RENDER" in os.environ:
+        logging.info("Running in Render environment, using special configuration")
         
-        # Try to find Chrome binary in common locations
-        chrome_paths = [
-            '/usr/bin/google-chrome',
-            '/usr/bin/google-chrome-stable',
-            '/usr/bin/chromium',
-            '/usr/bin/chromium-browser',
-            '/opt/google/chrome/chrome'
-        ]
-        
-        # Set binary location if found
-        for path in chrome_paths:
+        # Use the chromium-browser binary if available (usually pre-installed)
+        for path in ['/usr/bin/chromium-browser', '/usr/bin/chromium']:
             if os.path.exists(path):
                 options.binary_location = path
-                logging.info(f"Found Chrome binary at: {path}")
+                logging.info(f"Using chromium browser at: {path}")
                 break
     
     try:
-        # Create the driver
-        return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        # Create the driver with explicit ChromeDriverManager
+        driver_manager = ChromeDriverManager()
+        driver_path = driver_manager.install()
+        logging.info(f"ChromeDriver installed at: {driver_path}")
+        
+        return webdriver.Chrome(service=Service(driver_path), options=options)
     except Exception as e:
         logging.error(f"WebDriver creation error: {str(e)}")
-        # Fallback to a more explicit error with troubleshooting info
-        error_msg = f"Failed to create Chrome WebDriver: {str(e)}"
-        if is_render:
-            error_msg += "\nThis may be due to Chrome not being installed on the Render environment."
-            error_msg += "\nPlease update your Render configuration to install Chrome."
-        raise RuntimeError(error_msg)
+        
+        # Fallback approach - try to use ChromeDriver directly if available
+        try:
+            logging.info("Trying fallback WebDriver approach")
+            from selenium.webdriver.chrome.service import Service as ChromeService
+            return webdriver.Chrome(service=ChromeService(), options=options)
+        except Exception as fallback_error:
+            logging.error(f"Fallback WebDriver creation failed: {str(fallback_error)}")
+            
+            # Provide a comprehensive error with troubleshooting steps
+            error_msg = (
+                f"Failed to create Chrome WebDriver: {str(e)}\n"
+                "This error occurred in a Render environment where Chrome installation is restricted.\n"
+                "Consider using a headless browser service like Puppeteer or a cloud-based testing solution."
+            )
+            raise RuntimeError(error_msg)
 
 
 def load_default_payloads():
     payloads_path = os.path.join("helper", "payloads", "optimized_reflected_xss.txt")
-    with open(payloads_path, "r") as file:
-        return [line.strip() for line in file if line.strip()]
+    try:
+        with open(payloads_path, "r") as file:
+            return [line.strip() for line in file if line.strip()]
+    except FileNotFoundError:
+        logging.warning(f"Payloads file not found at {payloads_path}, using fallback payloads")
+        # Fallback to some basic XSS payloads
+        return [
+            "<script>alert('XSS')</script>",
+            "<img src=x onerror=alert('XSS')>",
+            "<svg/onload=alert('XSS')>"
+        ]
 
 
 @router.post("/DOM-BasedXss")
@@ -253,6 +249,21 @@ async def run_xss_scan(request_data: ScanRequest):
     options.add_argument("--disable-gpu")
     options.add_argument("--blink-settings=imagesEnabled=false")
     
+    # Check if we're in Render or another cloud environment
+    is_cloud_env = "RENDER" in os.environ
+    
+    if is_cloud_env:
+        logging.info("Detected cloud environment, using alternative WebDriver approach")
+        
+        # Try to use fake-xvfb approach for Render
+        options.add_argument("--disable-extensions")
+        options.add_argument("--remote-debugging-port=9222") 
+        
+        # Special options for cloud environments
+        options.add_argument("--window-size=1280,720")
+        options.add_argument("--disable-features=VizDisplayCompositor")
+        options.add_argument("--disable-webgl")
+        
     try:
         driver = get_chrome_driver(options)
         

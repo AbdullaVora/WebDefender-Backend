@@ -1,17 +1,13 @@
 services:
   - type: web
-    name: webdefender-backend  # Replace with your application name if needed
+    name: webdefender-backend
     env: python
-    buildCommand: |
-      # Make the Chrome installation script executable
-      chmod +x ./install_chrome.sh
-      # Run the Chrome installation script without sudo
-      ./install_chrome.sh
-      # Continue with your regular build command
-      pip install -r requirements.txt
-      # Add any other build commands here
+    buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    # Add your environment variables as needed
     envVars:
       - key: PYTHON_VERSION
         value: 3.11
+      - key: PYTHONUNBUFFERED
+        value: "true"
+      - key: CHROMEDRIVER_PATH
+        value: /opt/render/.wdm/drivers/chromedriver/linux64/latest/chromedriver

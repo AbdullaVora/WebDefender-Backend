@@ -14,16 +14,14 @@ ENV CHROME_BIN=/usr/bin/chromium \
 # Create and set working directory
 WORKDIR /app
 
-# Copy ONLY the necessary files for dependency installation
-COPY pyproject.toml poetry.lock ./
+# Copy requirements.txt for dependency installation
+COPY requirements.txt ./
 
-# Install Poetry and dependencies
-RUN pip install poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-root
+# Install dependencies using pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
 
 # Run the application
-CMD ["poetry", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "10000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "10000"]

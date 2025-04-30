@@ -9,21 +9,6 @@ router = APIRouter()
 
 @router.post("/emailAudit", response_model=EmailSecurityResponse)
 async def check_email_security(request: EmailSecurityRequest):
-    """
-    Check email security configuration for a domain including:
-    - SPF records
-    - DKIM records (with optional selector)
-    - DMARC records
-    - MX records
-    - DNSSEC status
-    - Security validation audit
-    
-    Expects JSON payload:
-    {
-        "domain": "example.com",
-        "dkim_selector": "optional_selector"
-    }
-    """
     controller = EmailSecurityController()
     try:
         data = controller.check_email_security(
@@ -33,7 +18,7 @@ async def check_email_security(request: EmailSecurityRequest):
 
         if db is not None:
             try:
-                mongo_result = data.copy()  # Ensure it's serializable
+                mongo_result = data.copy()
                 mongo_result["user_id"] = request.userId
                 insert_result = await db.EmailAudit_Report.insert_one(mongo_result)
             except Exception as e:
@@ -52,9 +37,6 @@ async def check_email_security(request: EmailSecurityRequest):
 
 @router.get("/scan/{domain}", response_model=EmailSecurityResponse)
 async def scan_domain(domain: str, selector: str = "default"):
-    """
-    API endpoint to scan a domain via GET request
-    """
     controller = EmailSecurityController()
     try:
         return controller.check_email_security(domain=domain, dkim_selector=selector)
@@ -69,9 +51,6 @@ async def scan_domain(domain: str, selector: str = "default"):
 
 @router.get("/export/{domain}")
 async def export_results(domain: str, selector: str = "default"):
-    """
-    API endpoint to export scan results to JSON file
-    """
     controller = EmailSecurityController()
     try:
         filename = controller.export_results(domain=domain, dkim_selector=selector)
@@ -85,9 +64,6 @@ async def export_results(domain: str, selector: str = "default"):
 
 @router.get("/report/{domain}")
 async def get_report(domain: str, selector: str = "default"):
-    """
-    API endpoint to get only validation summary for a domain
-    """
     controller = EmailSecurityController()
     try:
         return controller.get_summary(domain=domain, dkim_selector=selector)

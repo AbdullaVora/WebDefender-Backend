@@ -1,14 +1,84 @@
 # models/newScans/emailAuditModel.py
 from pydantic import BaseModel, Field
 from typing import Dict, List, Any, Optional
+<<<<<<< HEAD
 from datetime import datetime
+=======
+import dns.resolver
+import dns.query
+import dns.message
+import dns.name
+import dns.flags
+from datetime import datetime
+import json
 
-# Request model
+RESOLVER_IPS = ["8.8.8.8", "1.1.1.1", "8.8.4.4"]
+
+# Embedded dataset for audit metadata
+AUDIT_METADATA = {
+    "SPF uses hard fail (-all)": {
+        "class": "SPF",
+        "description": "SPF should use '-all' to reject unauthorized senders.",
+        "severity": "high"
+    },
+    "DKIM public key exists": {
+        "class": "DKIM",
+        "description": "DKIM must have a published public key for signature verification.",
+        "severity": "high"
+    },
+    "DMARC policy is reject/quarantine": {
+        "class": "DMARC",
+        "description": "DMARC should be set to 'reject' or 'quarantine' to enforce policy.",
+        "severity": "medium"
+    },
+    "DNSSEC is enabled": {
+        "class": "DNS",
+        "description": "DNSSEC adds integrity to DNS responses and prevents spoofing.",
+        "severity": "medium"
+    },
+    "SPF includes too many DNS lookups": {
+        "class": "SPF",
+        "description": "SPF records should avoid exceeding 10 DNS lookups to prevent policy failure.",
+        "severity": "medium"
+    },
+    "DKIM key length is at least 1024 bits": {
+        "class": "DKIM",
+        "description": "Use a DKIM key length of 1024 bits or greater for secure signing.",
+        "severity": "medium"
+    },
+    "DMARC rua reporting is enabled": {
+        "class": "DMARC",
+        "description": "DMARC should include 'rua' tag for aggregate reporting.",
+        "severity": "low"
+    },
+    "DMARC ruf forensic reporting is enabled": {
+        "class": "DMARC",
+        "description": "DMARC should include 'ruf' tag to receive detailed failure reports.",
+        "severity": "low"
+    },
+    "DMARC alignment mode is strict": {
+        "class": "DMARC",
+        "description": "DMARC should use 'adkim=s' and 'aspf=s' for strict alignment.",
+        "severity": "low"
+    },
+    "MX records are valid and reachable": {
+        "class": "MX",
+        "description": "MX records should be present and point to reachable mail servers.",
+        "severity": "high"
+    },
+    "No wildcard SPF mechanism (+all)": {
+        "class": "SPF",
+        "description": "Avoid using '+all' in SPF, which allows all senders and is insecure.",
+        "severity": "critical"
+    }
+}
+>>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
+
 class EmailSecurityRequest(BaseModel):
     domain: str = Field(..., description="Domain to scan for email security", example="example.com")
     dkim_selector: str = Field(default="default", description="DKIM selector to use", example="default")
     userId: str
-# Response models for parsed records
+
 class RecordTagDetail(BaseModel):
     value: str
     name: str
@@ -18,7 +88,6 @@ class ParsedRecord(BaseModel):
     raw: str
     parsed: Dict[str, RecordTagDetail]
 
-# Main response model
 class EmailSecurityResponse(BaseModel):
     domain: str
     SPF: Optional[ParsedRecord]
@@ -26,12 +95,15 @@ class EmailSecurityResponse(BaseModel):
     DMARC: Optional[ParsedRecord]
     MX: List[str]
     DNSSEC: str
+<<<<<<< HEAD
     AuditSummary: Dict[str, str]
     created_time: datetime = Field(default_factory=datetime.utcnow)
     scanStatus: str = "success"
 
+=======
+    AuditSummary: Dict[str, Dict[str, str]]
+>>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 
-# Model for the underlying business logic
 class EmailSecurityModel:
     def __init__(self, domain, selector='default'):
         self.domain = domain
@@ -39,7 +111,6 @@ class EmailSecurityModel:
         self.results = {}
 
     def run_all_checks(self):
-        """Run all email security checks for the domain"""
         self.results = {
             "domain": self.domain,
             "SPF": self.fetch_spf(),
@@ -51,11 +122,19 @@ class EmailSecurityModel:
         self.results["AuditSummary"] = self.validate_security()
         return self.results
 
+    def resolve_with_fallback(self, domain, rdtype):
+        for ns in RESOLVER_IPS:
+            resolver = dns.resolver.Resolver()
+            resolver.nameservers = [ns]
+            try:
+                return resolver.resolve(domain, rdtype)
+            except Exception:
+                continue
+        raise dns.resolver.NoAnswer(f"All resolvers failed to get {rdtype} record for {domain}")
+
     def fetch_spf(self):
-        """Fetch SPF record for the domain"""
-        import dns.resolver
         try:
-            txt_records = dns.resolver.resolve(self.domain, 'TXT')
+            txt_records = self.resolve_with_fallback(self.domain, 'TXT')
             for rdata in txt_records:
                 for txt_string in rdata.strings:
                     if b"v=spf1" in txt_string:
@@ -69,11 +148,9 @@ class EmailSecurityModel:
             return {"raw": f"Error fetching SPF: {e}", "parsed": {}}
 
     def fetch_dkim(self, selector):
-        """Fetch DKIM record for the domain with given selector"""
-        import dns.resolver
         try:
             dkim_domain = f"{selector}._domainkey.{self.domain}"
-            txt_records = dns.resolver.resolve(dkim_domain, 'TXT')
+            txt_records = self.resolve_with_fallback(dkim_domain, 'TXT')
             record = ' '.join([r.to_text().strip('"') for r in txt_records])
             return {
                 "raw": record,
@@ -83,11 +160,9 @@ class EmailSecurityModel:
             return {"raw": f"DKIM check failed: {e}", "parsed": {}}
 
     def fetch_dmarc(self):
-        """Fetch DMARC record for the domain"""
-        import dns.resolver
         try:
             dmarc_domain = f"_dmarc.{self.domain}"
-            txt_records = dns.resolver.resolve(dmarc_domain, 'TXT')
+            txt_records = self.resolve_with_fallback(dmarc_domain, 'TXT')
             raw = ' '.join([r.to_text().strip('"') for r in txt_records])
             parsed = self.parse_dmarc_record(raw)
             return {
@@ -98,75 +173,65 @@ class EmailSecurityModel:
             return {"raw": f"DMARC check failed: {e}", "parsed": {}}
 
     def fetch_mx_records(self):
-        """Fetch MX records for the domain"""
-        import dns.resolver
         try:
-            mx_records = dns.resolver.resolve(self.domain, 'MX')
+            mx_records = self.resolve_with_fallback(self.domain, 'MX')
             return [f"{r.exchange} (Priority: {r.preference})" for r in mx_records]
         except Exception as e:
             return [f"MX check failed: {e}"]
 
     def check_dnssec(self):
-        """Check DNSSEC status for the domain"""
-        import dns.resolver
-        import dns.query
-        import dns.message
-        import dns.name
-        import dns.flags
         try:
             n = dns.name.from_text(self.domain)
-            ns = dns.resolver.get_default_resolver().nameservers[0]
-            query = dns.message.make_query(n, dns.rdatatype.DNSKEY, want_dnssec=True)
-            response = dns.query.udp(query, ns, timeout=2)
-
-            if response.flags & dns.flags.AD:
-                return "DNSSEC is enabled (AD flag set)."
-            elif response.answer:
-                return "DNSSEC records present but AD flag not validated."
-            else:
-                return "DNSSEC not configured."
+            for ns in RESOLVER_IPS:
+                query = dns.message.make_query(n, dns.rdatatype.DNSKEY, want_dnssec=True)
+                try:
+                    response = dns.query.udp(query, ns, timeout=2)
+                    if response.flags & dns.flags.AD:
+                        return "DNSSEC is enabled (AD flag set)."
+                    elif response.answer:
+                        return "DNSSEC records present but AD flag not validated."
+                except Exception:
+                    continue
+            return "DNSSEC not configured."
         except Exception as e:
             return f"DNSSEC check failed: {e}"
 
     def validate_security(self):
-        """Validate the security settings from results"""
         validation = {}
+        for check, meta in AUDIT_METADATA.items():
+            cls = meta["class"]
+            severity = meta["severity"]
+            status = "Fail"
 
-        spf = self.results.get("SPF", {}).get("parsed", {})
-        spf_valid = any(tag in spf for tag in ['-all'])
-        validation["SPF uses hard fail (-all)"] = "Pass" if spf_valid else "Fail"
+            if cls == "SPF" and check in self.results.get("SPF", {}).get("parsed", {}):
+                status = "Pass"
+            elif cls == "DKIM" and check in self.results.get("DKIM", {}).get("parsed", {}):
+                status = "Pass"
+            elif cls == "DMARC" and check in self.results.get("DMARC", {}).get("parsed", {}):
+                status = "Pass"
+            elif cls == "DNS" and "enabled" in self.results.get("DNSSEC", "").lower():
+                status = "Pass"
+            elif cls == "MX" and "MX check failed" not in self.results.get("MX", [])[0]:
+                status = "Pass"
 
-        dkim = self.results.get("DKIM", {}).get("parsed", {})
-        dkim_valid = 'p' in dkim and dkim['p']['value'] != ''
-        validation["DKIM public key exists"] = "Pass" if dkim_valid else "Fail"
-
-        dmarc = self.results.get("DMARC", {}).get("parsed", {})
-        dmarc_policy = dmarc.get("p", {}).get("value", "none") if dmarc else None
-        dmarc_valid = dmarc_policy in ['quarantine', 'reject'] if dmarc_policy else False
-        validation["DMARC policy is reject/quarantine"] = "Pass" if dmarc_valid else "Fail"
-
-        dnssec = self.results.get("DNSSEC", "")
-        dnssec_valid = "enabled" in dnssec.lower()
-        validation["DNSSEC is enabled"] = "Pass" if dnssec_valid else "Fail"
+            validation[check] = {
+                "status": status,
+                "class": cls,
+                "severity": severity,
+                "description": meta["description"]
+            }
 
         return validation
 
     def export_json(self, filename=None):
-        """Export results to a JSON file"""
-        import json
-        from datetime import datetime
-        
         if not filename:
             filename = f"{self.domain}_email_security_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        
         with open(filename, "w") as f:
             json.dump(self.results, f, indent=4)
-        
         return filename
 
     @staticmethod
     def parse_dmarc_record(record):
-        """Parse a DMARC record into components"""
         tag_descriptions = {
             "v": ("Version", "Identifies the record as a DMARC record. Must be 'DMARC1'."),
             "p": ("Policy", "Policy for messages failing DMARC: 'none', 'quarantine', or 'reject'."),
@@ -177,7 +242,6 @@ class EmailSecurityModel:
             "aspf": ("SPF Alignment Mode", "Specifies alignment mode for SPF."),
             "adkim": ("DKIM Alignment Mode", "Specifies alignment mode for DKIM."),
         }
-
         result = {}
         tags = [item.strip() for item in record.split(';') if item]
         for tag in tags:
@@ -194,7 +258,6 @@ class EmailSecurityModel:
 
     @staticmethod
     def parse_spf_record(record):
-        """Parse an SPF record into components"""
         mechanisms = {
             "v": ("Version", "Specifies SPF version. Must be 'spf1'."),
             "ip4": ("IPv4", "Authorized IPv4 address to send mail."),
@@ -209,7 +272,6 @@ class EmailSecurityModel:
             "?all": ("Neutral", "No policy."),
             "+all": ("Pass All", "Pass all sources. Insecure."),
         }
-
         result = {}
         for segment in record.split():
             if '=' in segment:
@@ -226,7 +288,6 @@ class EmailSecurityModel:
 
     @staticmethod
     def parse_dkim_record(record):
-        """Parse a DKIM record into components"""
         tags = {
             "v": ("Version", "Must be DKIM1."),
             "k": ("Key Type", "Key type (rsa is common)."),
@@ -234,7 +295,6 @@ class EmailSecurityModel:
             "t": ("Flags", "Testing mode or other options."),
             "h": ("Hash Algorithms", "Hash algorithms allowed (e.g., sha256).")
         }
-
         result = {}
         segments = record.replace('"', '').split(';')
         for seg in segments:

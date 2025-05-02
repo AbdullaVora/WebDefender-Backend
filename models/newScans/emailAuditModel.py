@@ -1,9 +1,7 @@
 # models/newScans/emailAuditModel.py
 from pydantic import BaseModel, Field
 from typing import Dict, List, Any, Optional
-<<<<<<< HEAD
 from datetime import datetime
-=======
 import dns.resolver
 import dns.query
 import dns.message
@@ -72,7 +70,6 @@ AUDIT_METADATA = {
         "severity": "critical"
     }
 }
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 
 class EmailSecurityRequest(BaseModel):
     domain: str = Field(..., description="Domain to scan for email security", example="example.com")
@@ -95,14 +92,10 @@ class EmailSecurityResponse(BaseModel):
     DMARC: Optional[ParsedRecord]
     MX: List[str]
     DNSSEC: str
-<<<<<<< HEAD
     AuditSummary: Dict[str, str]
     created_time: datetime = Field(default_factory=datetime.utcnow)
     scanStatus: str = "success"
-
-=======
     AuditSummary: Dict[str, Dict[str, str]]
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 
 class EmailSecurityModel:
     def __init__(self, domain, selector='default'):

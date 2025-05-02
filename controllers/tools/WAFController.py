@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # import requests
 # import json
 # import socket
@@ -330,7 +328,6 @@
 #     return None
 
 
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 import asyncio
 import json
 import socket
@@ -416,7 +413,7 @@ SERVER_SIGNATURES = {
     # ... rest of your signatures
 }
 
-<<<<<<< HEAD
+
 class ScanLogger:
     """Helper class to log scan activities"""
     def __init__(self, target):
@@ -447,7 +444,6 @@ class ScanLogger:
     def get_logs(self):
         """Get all logs for this scan"""
         return self.activity_log
-=======
 WAF_DESCRIPTION_DATASET = {
     "Cloudflare": {
         "class": "Cloudflare WAF",
@@ -678,7 +674,6 @@ SERVER_DESCRIPTION_DATASET = {
 
 # Create data directory if it doesn't exist
 os.makedirs("data", exist_ok=True)
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 
 async def get_ip(domain, scan_logger):
     start_time = datetime.now()
@@ -797,11 +792,8 @@ async def scan_target(url):
                 waf_result = detect_waf(response.headers, scan_logger)
                 server_info = detect_server(response.headers, scan_logger)
                 city, region, isp, latitude, longitude = await get_geo_info(ip_address, scan_logger)
-
-<<<<<<< HEAD
                 # Get all scan logs
                 scan_logs = scan_logger.get_logs()
-=======
                 # WAF Description handling
                 if isinstance(waf_result, list) and waf_result and waf_result[0] in WAF_DESCRIPTION_DATASET:
                     waf_description_info = WAF_DESCRIPTION_DATASET[waf_result[0]]
@@ -828,10 +820,8 @@ async def scan_target(url):
                 # Read scan logs
                 with open("data/waf_scan.log", "r") as log_file:
                     scan_logs = log_file.readlines()
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
-                
-                scan_duration = (datetime.now() - scan_start).total_seconds()
-                scan_logger.log_performance("Total scan", scan_duration)
+                    scan_duration = (datetime.now() - scan_start).total_seconds()
+                    scan_logger.log_performance("Total scan", scan_duration)
 
                 data = {
                     "scanType": "WAFDetector",
@@ -845,7 +835,6 @@ async def scan_target(url):
                         "ISP": isp
                     },
                     "Status_Code": status_code,
-<<<<<<< HEAD
                     "WAF_Detection_Result": waf_result,
                     "Server": server_info,
                     "Protection_Methods": "Rate Limiting, Captcha" if waf_result != ["Unknown"] else "None",
@@ -853,15 +842,13 @@ async def scan_target(url):
                         "TotalScanTime": scan_duration,
                         "HTTPRequestTime": request_duration
                     },
-                    "logs": scan_logs
-=======
+                    "logs": scan_logs,
                     "WAF_Detection_Result": waf_result if isinstance(waf_result, list) else [waf_result],
                     "WAF_Info": waf_description_info,
                     "Server": server_info,
                     "Server_Info": server_description_info,
                     "Protection_Methods": "Rate Limiting, Captcha" if waf_result != "Unknown" else "None",
-                    "logs": relevant_logs
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
+                    "logs": scan_logs
                 }
 
                 

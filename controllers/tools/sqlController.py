@@ -63,14 +63,12 @@ DEFAULT_PROXY = None  # Proxy disabled by default
 
 vulnerabilities = []
 
-<<<<<<< HEAD
+
 # SQLMAP_PATH = r"helper\sqlmap-master\sqlmap.py"
 
 SQLMAP_PATH = os.path.join('helper', 'sqlmap-master', 'sqlmap.py')
-=======
-SQLMAP_PATH =  "d:\WebDefender_Backend\WebDefender_API\helper\sqlmap-master\sqlmap.py"
->>>>>>> a2fde178356247913e1be4f9504c7f8ad597f496
 
+# SQLMAP_PATH =  "d:\WebDefender_Backend\WebDefender_API\helper\sqlmap-master\sqlmap.py"
 
 if os.path.exists(OUTPUT_FILE):
     with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:

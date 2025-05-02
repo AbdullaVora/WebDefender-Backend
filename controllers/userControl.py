@@ -1,11 +1,14 @@
 from config.database import get_db
-from models.userModel import UserModel
-from fastapi import HTTPException
+from models.userModel import UserModel, UserUpdateModel
+from fastapi import HTTPException, status
 from pymongo.errors import PyMongoError
 import json
 import jwt
 import datetime
 from passlib.hash import argon2  # Argon2 for password hashing
+from bson import ObjectId
+from datetime import datetime
+
 
 # Secret key for JWT (Keep it safe)
 SECRET_KEY = "your_secret_key"
@@ -142,5 +145,82 @@ class UserController:
             print("Error occurred at step:", e.__traceback__.tb_lineno)  # Show the line number
             raise HTTPException(
                 status_code=500,
+                detail=f"An unexpected error occurred: {str(e)}"
+            )
+
+class UserController:
+    # ... (your existing methods)
+
+    @staticmethod
+    async def update_user(user_id: str, update_data: UserUpdateModel, token: str):
+        try:
+            db = get_db()
+            
+            # 1. Verify the JWT token
+            try:
+                payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+                token_user_id = payload.get("user_id")
+                if token_user_id != user_id:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Not authorized to update this user"
+                    )
+            except jwt.ExpiredSignatureError:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token has expired"
+                )
+            except jwt.InvalidTokenError:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid authentication token"
+                )
+
+            # 2. Prepare update dictionary (exclude unset fields)
+            update_dict = update_data.dict(exclude_unset=True)
+            
+            # 3. If password is being updated, hash the new password
+            if "password" in update_dict:
+                update_dict["password"] = argon2.hash(update_dict["password"])
+                # Remove any confirmPassword if it exists
+                update_dict.pop("confirmPassword", None)
+
+            # 4. Add updated_at timestamp
+            update_dict["updated_at"] = datetime.utcnow()
+
+            # 5. Perform the update
+            result = await db.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$set": update_dict}
+            )
+
+            if result.modified_count == 0:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found or no changes made"
+                )
+
+            # 6. Fetch and return the updated user data
+            updated_user = await db.users.find_one({"_id": ObjectId(user_id)})
+            updated_user["_id"] = str(updated_user["_id"])
+            
+            # Remove sensitive data before returning
+            updated_user.pop("password", None)
+            updated_user.pop("confirmPassword", None)
+
+            return {
+                "message": "User updated successfully",
+                "data": updated_user,
+                "status_code": status.HTTP_200_OK
+            }
+
+        except PyMongoError as e:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Database error: {str(e)}"
+            )
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=f"An unexpected error occurred: {str(e)}"
             )

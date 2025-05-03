@@ -16,10 +16,9 @@ async def register_user(register: UserModel):
 @router.post("/login")
 async def login_user(login: LoginModel):
     print("Login route hit")
-    result = await UserController.login_user(login.email, login.password)
+    # Pass the entire LoginModel object instead of individual fields
+    result = await UserController.login_user(login)
     return result
-
-from typing import Annotated  # For Python 3.9+
 
 @router.put("/update/{user_id}")
 async def update_user(

@@ -68,11 +68,14 @@ async def scan_targets(
         
         if db is not None:
             try:
-                mongo_result = data  # Ensure it's serializable
+                mongo_result = data.dict() if hasattr(data, "dict") else data
                 mongo_result['userId'] = userId
                 insert_result = await db.Cors_Report.insert_one(mongo_result)
+                print(f"[✅] Inserted with ID: {insert_result.inserted_id}")
             except Exception as e:
-                print(f"[❌] Error saving to MongoDB: {e}")
+                import traceback
+                print("[❌] MongoDB Insert Error:")
+                traceback.print_exc()
 
         return data
     except json.JSONDecodeError:
@@ -98,15 +101,23 @@ async def scan_batch_targets(request: ScanBatchRequest):
     """
     data = controller.scan_batch_targets(
         domains=request.domains,
+        retries=request.retries,
+        timeout=request.timeout,
         threads=request.threads,
         delay=request.delay,
         cookies=request.cookies
     )
+
     if db is not None:
         try:
-            mongo_result = data.copy()  # Ensure it's serializable
-            insert_result = await db.Cors_Report.insert_one(data)
+            mongo_result = data.dict() if hasattr(data, "dict") else data
+            # mongo_result['userId'] = userId
+            insert_result = await db.Cors_Report.insert_one(mongo_result)
+            print(f"[✅] Inserted with ID: {insert_result.inserted_id}")
         except Exception as e:
-            print(f" Error saving to MongoDB: {e}")
+            import traceback
+            print("[❌] MongoDB Insert Error:")
+            traceback.print_exc()
+
 
     return data

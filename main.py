@@ -13,6 +13,8 @@ from routers.newScans.JSParserRoute import router as JSParser_Route
 from routers.newScans.TechnologiesRouter import router as Technologies_Route
 from routers.newScans.CORSRouter import router as Cors_Route
 from routers.ReportsRouter import router as reports_router
+from routers.scanCountRoute import router as scanCount_Router
+from routers.newScans.WebReconRouter import router as Web_Recon
 
 from config.database import db, connect_to_mongo
 
@@ -48,8 +50,10 @@ app.include_router(email_Route, prefix="/api/newScans")
 app.include_router(JSParser_Route, prefix="/api/newScans")
 app.include_router(Technologies_Route, prefix="/api/newScans")
 app.include_router(Cors_Route, prefix="/api/newScans")
+app.include_router(Web_Recon, prefix="/api/newScans")
 
 app.include_router(reports_router, prefix="/api")
+app.include_router(scanCount_Router, prefix="/api")  # Scan count routes
 
 
 

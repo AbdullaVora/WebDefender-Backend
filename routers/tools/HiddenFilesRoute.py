@@ -213,7 +213,7 @@ async def start_scan(request: ScanRequest):
             status_code=500,
             content={
                 "scanType": "Hidden-Files-Reconnaissance",
-                "user_id": request.userId,
+                "userId": request.userId,
                 "scan_id": str(uuid.uuid4()),
                 "status": "error",
                 "message": str(e),

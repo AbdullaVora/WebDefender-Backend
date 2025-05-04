@@ -1,0 +1,13 @@
+2025-05-04 12:31:14,049 - Starting scan for target: https://pixiv.net
+2025-05-04 12:31:14,057 - Resolving domain: pixiv.net
+2025-05-04 12:31:14,131 - Resolved domain pixiv.net to IP 210.140.139.161
+2025-05-04 12:31:14,136 - Using IP directly as URL: http://210.140.139.161
+2025-05-04 12:31:14,148 - Sending request to http://210.140.139.161
+2025-05-04 12:31:14,474 - Received response with status code: 403
+2025-05-04 12:31:14,475 - Response headers: {"Server": "nginx", "Date": "Sun, 04 May 2025 07:01:24 GMT", "Content-Type": "text/html", "Content-Length": "146", "Connection": "keep-alive"}
+2025-05-04 12:31:14,482 - No WAF detected
+2025-05-04 12:31:14,483 - Detected server: Nginx
+2025-05-04 12:31:14,484 - Getting geo information for IP: 210.140.139.161
+2025-05-04 12:31:14,958 - IP info retrieved: Tokyo, Tokyo, AS4694 IDC Frontier Inc.
+2025-05-04 12:31:16,311 - Geocoded location: 35.6812546, 139.766706
+2025-05-04 12:31:16,340 - Scan completed for pixiv.net. Results saved to data/pixiv_net_20250504123114_result.json

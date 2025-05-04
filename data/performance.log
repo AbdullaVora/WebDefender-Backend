@@ -10,3 +10,27 @@
 2025-04-28 23:52:24,345 - 20250428235223 - bmusurat.ac.in - Server detection took 0.00 seconds
 2025-04-28 23:52:26,257 - 20250428235223 - bmusurat.ac.in - Geo info lookup took 1.91 seconds
 2025-04-28 23:52:26,264 - 20250428235223 - bmusurat.ac.in - Total scan took 2.26 seconds
+2025-05-04 01:06:53,572 - 20250504010653 - bmusurat.ac.in - IP resolution took 0.08 seconds
+2025-05-04 01:06:53,947 - 20250504010653 - bmusurat.ac.in - HTTP request took 0.36 seconds
+2025-05-04 01:06:53,967 - 20250504010653 - bmusurat.ac.in - WAF detection took 0.02 seconds
+2025-05-04 01:06:53,976 - 20250504010653 - bmusurat.ac.in - Server detection took 0.01 seconds
+2025-05-04 01:06:55,660 - 20250504010653 - bmusurat.ac.in - Geo info lookup took 1.68 seconds
+2025-05-04 01:06:55,694 - 20250504010653 - bmusurat.ac.in - Total scan took 2.12 seconds
+2025-05-04 01:10:14,492 - 20250504011014 - bmusurat.ac.in - IP resolution took 0.00 seconds
+2025-05-04 01:10:14,826 - 20250504011014 - bmusurat.ac.in - HTTP request took 0.33 seconds
+2025-05-04 01:10:14,830 - 20250504011014 - bmusurat.ac.in - WAF detection took 0.00 seconds
+2025-05-04 01:10:14,831 - 20250504011014 - bmusurat.ac.in - Server detection took 0.00 seconds
+2025-05-04 01:10:16,294 - 20250504011014 - bmusurat.ac.in - Geo info lookup took 1.46 seconds
+2025-05-04 01:10:16,299 - 20250504011014 - bmusurat.ac.in - Total scan took 1.81 seconds
+2025-05-04 01:12:27,212 - 20250504011227 - bmusurat.ac.in - IP resolution took 0.06 seconds
+2025-05-04 01:12:27,533 - 20250504011227 - bmusurat.ac.in - HTTP request took 0.31 seconds
+2025-05-04 01:12:27,537 - 20250504011227 - bmusurat.ac.in - WAF detection took 0.00 seconds
+2025-05-04 01:12:27,538 - 20250504011227 - bmusurat.ac.in - Server detection took 0.00 seconds
+2025-05-04 01:12:30,364 - 20250504011227 - bmusurat.ac.in - Geo info lookup took 2.83 seconds
+2025-05-04 01:12:30,370 - 20250504011227 - bmusurat.ac.in - Total scan took 3.16 seconds
+2025-05-04 12:31:14,132 - 20250504123114 - https://pixiv.net - IP resolution took 0.08 seconds
+2025-05-04 12:31:14,473 - 20250504123114 - https://pixiv.net - HTTP request took 0.32 seconds
+2025-05-04 12:31:14,482 - 20250504123114 - https://pixiv.net - WAF detection took 0.01 seconds
+2025-05-04 12:31:14,484 - 20250504123114 - https://pixiv.net - Server detection took 0.00 seconds
+2025-05-04 12:31:16,311 - 20250504123114 - https://pixiv.net - Geo info lookup took 1.83 seconds
+2025-05-04 12:31:16,338 - 20250504123114 - https://pixiv.net - Total scan took 2.20 seconds

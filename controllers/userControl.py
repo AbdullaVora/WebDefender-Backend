@@ -289,6 +289,7 @@ class UserController:
             # Step 7: Return response with token
             return {
                 "message": "User Registered Successfully",
+                "user_id": user_id,
                 "token": token,  # Include JWT token in response
                 "data": response_data,
                 "status_code": 201,

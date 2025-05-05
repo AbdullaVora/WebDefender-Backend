@@ -15,6 +15,7 @@ from routers.newScans.CORSRouter import router as Cors_Route
 from routers.ReportsRouter import router as reports_router
 from routers.scanCountRoute import router as scanCount_Router
 from routers.newScans.WebReconRouter import router as Web_Recon
+from routers.forgotPasswordRouter import router as forgot_route
 
 from config.database import db, connect_to_mongo
 
@@ -54,7 +55,7 @@ app.include_router(Web_Recon, prefix="/api/newScans")
 
 app.include_router(reports_router, prefix="/api")
 app.include_router(scanCount_Router, prefix="/api")  # Scan count routes
-
+app.include_router(forgot_route, prefix="/api/auth")
 
 
 @app.on_event("startup")

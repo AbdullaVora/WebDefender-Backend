@@ -171,7 +171,7 @@ def perform_scan(target: str) -> ScanResponse:
         response = ScanResponse(
             target=target,
             status="completed",
-            results=[ToolResult(**result) for result in results],
+            # results=[ToolResult(**result) for result in results],
             merged_data=merged_data,
             timestamp=datetime.now().isoformat()
         )
